@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Subject Suggest</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<div class="header">
+    <div> <h1>Subject Recommendation</h1></div>
+</div>
+<div class="selection">
+    <div class="sub_inner">
+        <!-- Main Input For Receiving Query to our ML -->
+        <form action="{{ url_for('predict')}}"method="post">
+            <input type="text" name="experience" placeholder="Subject" required="required" /><br>
+            <input type="text" name="score" placeholder="Score" required="required" /><br>
+            <!--<input type="text" name="interview_score" placeholder="Interview Score" required="required" />-->
+            <button type="submit" class="btn-large">Suggest</button><br>
+        </form><br><br><br><br>
+    </div>
+    <input id="res" type="hidden" value="{{ prediction_text }}">
+
+</div>
+<div id="out"></div>
+<div class="tt">
+
+    <table>
+        <tr>
+            <th>Weekdays</th>
+            <th>8:00-8:50</th>
+            <th>9:00-9:50</th>
+            <th>10:00-10:50</th>
+            <th>11:00-11:50</th>
+            <th>12:00-12:50</th>
+            <th>13:00-14:00</th>
+        </tr>
+        <tr>
+            <th>Monday</th>
+            <td class="A1"><span>A1</span><br></td>
+            <td class="F1"><span>F1</span><br></td>
+            <td class="D1"><span>D1</span><br></td>
+            <td class="TB1"><span>TB1</span><br></td>
+            <td class="TG1"><span>TG1</span><br></td>
+            <th>Lunch</th>
+        </tr>
+        <tr>
+            <th>Tuesday</th>
+            <td class="B1"><span>B1</span><br></td>
+            <td class="G1"><span>G1</span><br></td>
+            <td class="E1"><span>E1</span><br></td>
+            <td class="TC1"><span>TC1</span><br></td>
+            <td class="TAA1"><span>TAA1</span><br></td>
+            <th>Lunch</th>
+</tr>
+<tr>
+    <th>Wednesday</th>
+    <td class="C1"><span>C1</span><br></td>
+    <td class="A1"><span>A1</span><br></td>
+    <td class="F1"><span>F1</span><br></td>
+    <td class="V1"><span>V1</span><br></td>
+    <td class="V2"><span>V2</span><br></td>
+    <th>Lunch</th>
+</tr>
+<tr>
+    <th>Tuesday</th>
+    <td class="D1"><span>D1</span><br></td>
+    <td class="B1"><span>B1</span><br></td>
+    <td class="G1"><span>G1</span><br></td>
+    <td class="TE1"><span>TE1</span><br></td>
+    <td class="TCC1"><span>TCC1</span><br></td>
+    <th>Lunch</th>
+</tr>
+<tr>
+    <th>Friday</th>
+    <td class="E1"><span>E1</span><br></td>
+    <td class="C1"><span>C1</span><br></td>
+    <td class="TA1"><span>TA1</span><br></td>
+    <td class="TF1"><span>TF1</span><br></td>
+    <td class="TD1"><span>TD1</span><br></td>
+    <th>Lunch</th>
+</tr>
+</table>
+</div>
+<script>
+    var score = document.getElementById("res").value;
+    var obj = JSON.parse(score);
+   var subname = ["Subject 1", "Subject 2","Subject 3","Subject 4","Subject 5"];
+   var slots = ["A1+TA1","B1+TB1","C1+TC1","D1+TD1","E1+TE1"];
+   var score = document.getElementById("res").value;
+   var scorearr = obj['data'];
+   for(var i=0;i<subname.length;i++) {
+       if (scorearr[i] > 0) {
+           var s = slots[i].split("+");
+           for (let j of s) {
+               var elements = document.getElementsByClassName(j), k, len;
+
+               for (k = 0, len = elements.length; k < len; k++) {
+                   elements[k].style.backgroundColor = 'yellow';
+                   var text = document.createTextNode(subname[i]);
+                    elements[k].appendChild(text);
+               }
+
+           }
+       }
+   }
+   document.getElementById("out").innerHTML= "Suggested Time Table when score of {{ features2 }} given to {{ features }}";
+</script>
+</body>
+</html>
