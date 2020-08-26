@@ -33,6 +33,6 @@ You should be able to view the homepage.
 
 Enter valid numerical values in all 3 input boxes and hit Predict.
 
-If everything goes well, you should  be able to see the predcited salary vaule on the HTML page!
+If everything goes well, you should  be able to see the page and select a preferred subject and get your recommended time table.
 check the output here: http://127.0.0.1:5000/predict
 
